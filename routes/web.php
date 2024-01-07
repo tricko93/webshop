@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('', fn() => view('products.index'));
+
+Route::resource('products', ProductController::class)
+	->only(['index', 'show']);
+
+Route::get('login', fn() => to_route('auth.create'))->name('login');
+
+Route::resource('auth', AuthController::class)
+    ->only(['create', 'store']);
+
+Route::resource('cart', CartController::class)
+    ->only(['create', 'store']);
