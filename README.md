@@ -4,22 +4,22 @@
 
 Enhance user experience and functionality:
 
-1. Authentication View Pages:
+1. Authentication Features:
 	- Implement user authentication and create view pages for login, registration, password reset, etc.
 
-2. Shopping Cart View Pages:
+2. Shopping Cart Management:
 	- Create pages to manage a user's shopping cart, allowing them to add, remove, and view items in the cart.
 	- Implement the logic for handling cart items and interactions.
 
-3. Display Products View Page:
+3. Enhanced Products Page:
 	- Enhance the products page to display a list of available products.
 	- Include features such as sorting, pagination, and filtering to make it easy for users to navigate through products.
 
-4. Display Single Product View Page:
+4. Detailed Product View:
 	- Create a detailed view page for individual products.
 	- Include product details, images, and any relevant information.
 
-5. Filter Products by Criteria:
+5. Product Filtering Options:
 	- Implement functionality to filter products based on criteria such as category, price range, or any other relevant attributes.
 	- Allow users to customize their product search experience.
 
@@ -147,7 +147,7 @@ Open database in adminer (web interface).
 
 	2. Enter your login credentials in the fields provided. The default values are:
 		- Server: mysql
-		- User:	root
-		- Password:	root
+		- User: root
+		- Password: root
 
 	3. Click on the "Login" button to access the adminer interface.
