@@ -4,8 +4,15 @@
 	</h1>
 
 	<x-card>
-		<form action="{{ route('auth.store') }}" method="POST">
+		<form action="{{ route('login') }}" method="POST">
 			@csrf
+
+			<div class="mb-8">
+				Don't have an account?
+				<a href="{{ route('register') }}" class="text-indigo-600 hover:underline">
+					Register here.
+				</a>
+			</div>
 
 			<div class="mb-8">
 				<x-label for="email" :required="true">E-mail</x-label>
@@ -28,7 +35,7 @@
 					</div>
 				</div>
 				<div>
-					<a href="#" class="text-indigo-600 hover:underline">
+					<a href="{{ route('password.request') }}" class="text-indigo-600 hover:underline">
 						Forgot password?
 					</a>
 				</div>
