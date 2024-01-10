@@ -239,8 +239,29 @@ class AuthenticationController extends Controller
         }
     }
 
+    /**
+     * Resend the email verification notification.
+     *
+     * @param Request $request
+     */
     public function resendVerificationEmail(Request $request)
     {
-        // Implement your resend verification email logic here
+        // Check if the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $user = Auth::user();
+
+        if ($user->hasVerifiedEmail()) {
+            Session::flash('success', 'User already verified');
+        } else {
+            // Send email verification notification
+            $user->notify(new VerifyEmailNotification());
+
+            Session::flash('success', 'Email verification link sent');
+        }
+
+        return back();
     }
 }
