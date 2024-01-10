@@ -14,6 +14,9 @@ use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Notifications\WelcomeNotification;
+use App\Notifications\VerifyEmailNotification;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticationController extends Controller
 {
@@ -66,14 +69,20 @@ class AuthenticationController extends Controller
         ]);
 
         // Create a new user
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Send welcome email
+        $user->notify(new WelcomeNotification());
+
         // Log in the new user
-        Auth::attempt($request->only('email', 'password'));
+        Auth::login($user);
+
+        // Send email verification notification
+        $user->notify(new VerifyEmailNotification());
 
         return redirect()->intended('/');
     }
@@ -198,7 +207,36 @@ class AuthenticationController extends Controller
 
     public function verifyEmail(Request $request)
     {
-        // Implement your email verification logic here
+        try {
+            $userId = $request->route('id');
+            $user = User::findOrFail($userId);
+
+            // Verify the email
+            if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+                // Invalid hash
+                Session::flash('error', 'Invalid verification link');
+                return redirect()->route('home');
+            }
+
+            // Check if the user is already verified
+            if ($user->hasVerifiedEmail()) {
+                // User already verified
+                Session::flash('success', 'User already verified');
+                return redirect()->route('home');
+            }
+
+            // Mark the user as verified
+            $user->markEmailAsVerified();
+
+            // Successful verification
+            Session::flash('success', 'Email successfully verified');
+            return redirect()->route('home');
+
+        } catch (\Exception $exception) {
+            // Error during email verification
+            Session::flash('error', 'Error during email verification');
+            return redirect()->route('home');
+        }
     }
 
     public function resendVerificationEmail(Request $request)
