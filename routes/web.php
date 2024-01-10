@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,3 +81,19 @@ Route::resource('products', ProductController::class)
 
 Route::resource('cart', CartController::class)
     ->only(['create', 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Profile and Account Settings Routes
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::middleware(['auth'])->group(function () {
+    // Profile Page
+    Route::get('/profile', [ProfileController::class, 'showProfile'])
+    	->name('profile.show');
+
+    Route::post('/profile/update', [ProfileController::class, 'update'])
+        ->name('profile.update');
+});
