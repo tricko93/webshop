@@ -98,18 +98,32 @@ Start the database container using Docker Compose.
 	docker compose up
 ```
 
-## Tailwind CSS Installation:
+## Node Packages Installation:
 
-Install Tailwind CSS.
+Install Node dependencies:
 
 ```sh
-	npm install -D tailwindcss postcss autoprefixer
+	npm install -D tailwindcss postcss autoprefixer alpinejs
 ```
 
-Install Tailwind form plugin.
+Additionally, install the Tailwind CSS form plugin:
 
 ```sh
 	npm install -D @tailwindcss/forms
+```
+
+## Clear Caches
+
+This step is not necessary, but it's convenient to have these commands for clearing caches when testing the application for another time.
+
+```sh
+	php artisan cache:clear
+	php artisan config:clear
+	php artisan route:clear
+	php artisan view:clear
+```
+```sh
+	composer dump-autoload
 ```
 
 ## Run the project:
