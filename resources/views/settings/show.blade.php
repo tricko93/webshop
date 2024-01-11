@@ -15,6 +15,20 @@
                 <p><strong>Email:</strong> {{ auth()->user()->email }}</p>
             </div>
 
+            <!-- Verification Status -->
+            <div class="mt-6">
+                <h2 class="text-lg font-semibold mb-2">Email Verification</h2>
+                @if(auth()->user()->hasVerifiedEmail())
+                    <p>Your email address is verified.</p>
+                @else
+                    <p>Your email address is not verified.</p> 
+                    <form method="POST" action="{{ route('verification.resend') }}">
+                        @csrf
+                        <x-button type="submit" class="mt-2">Resend Verification Email</x-button>
+                    </form>
+                @endif
+            </div>
+
             <!-- Password Change -->
             <div class="mt-6">
                 <h2 class="text-lg font-semibold mb-2">Security Settings</h2>
@@ -30,18 +44,22 @@
             <div class="mt-6">
                 <h2 class="text-lg font-semibold mb-2">Email Notifications</h2>
                 <p>Receive email notifications for:</p>
-                <ul>
-                    <li>
-                        <label class="flex items-center">
-                            <input type="checkbox" class="form-checkbox" checked> Order Updates
-                        </label>
-                    </li>
-                    <li>
-                        <label class="flex items-center">
-                            <input type="checkbox" class="form-checkbox"> Promotions and Offers
-                        </label>
-                    </li>
-                </ul>
+                <form method="POST" action="{{ route('settings.update') }}">
+                    @csrf
+                    <ul>
+                        <li>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="order_confirmation" class="form-checkbox" {{ $user->shouldSendOrderConfirmation() ? 'checked' : '' }}> Order Updates
+                            </label>
+                        </li>
+                        <li>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="promotions_and_updates" class="form-checkbox" {{ $user->shouldReceivePromotionsAndUpdates() ? 'checked' : '' }}> Promotions and Offers
+                            </label>
+                        </li>
+                    </ul>
+                    <x-button type="submit" class="mt-2">Save Settings</x-button>
+                </form>
             </div>
 
             <!-- Payment Settings -->

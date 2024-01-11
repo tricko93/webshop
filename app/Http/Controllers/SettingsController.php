@@ -12,7 +12,9 @@ class SettingsController extends Controller
     //
     public function showSettings()
     {
-        return view('settings.show');
+        $user = Auth::user();
+
+        return view('settings.show', compact('user'));
     }
 
     public function showChangePasswordForm()
@@ -100,5 +102,17 @@ class SettingsController extends Controller
         // You may want to perform additional cleanup or logging here
 
         return redirect()->route('home')->with('success', 'Your account has been deleted.');
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $user = Auth::user();
+
+        $user->update([
+            'order_confirmation' => $request->has('order_confirmation'),
+            'promotions_and_updates' => $request->has('promotions_and_updates'),
+        ]);
+
+        return redirect()->back()->with('success', 'Settings updated successfully.');
     }
 }

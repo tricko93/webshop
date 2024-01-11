@@ -116,4 +116,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings/delete', [SettingsController::class, 'showDeleteAccountForm'])
         ->name('account.delete');
     Route::delete('/settings/delete', [SettingsController::class, 'deleteAccount']);
+
+    // Update Settings
+    Route::post('/settings/update', [SettingsController::class, 'updateSettings'])
+        ->name('settings.update');
 });

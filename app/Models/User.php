@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'email_verified_at',
+        'order_confirmation',
+        'promotions_and_updates',
     ];
 
     /**
@@ -50,5 +52,17 @@ class User extends Authenticatable
     public function customer()
     {
         return $this->hasOne(Customer::class);
+    }
+
+    // Accessor method to check if the user should receive order confirmation emails
+    public function shouldSendOrderConfirmation()
+    {
+        return $this->order_confirmation;
+    }
+
+    // Accessor method to check if the user has opted for promotions and updates
+    public function shouldReceivePromotionsAndUpdates()
+    {
+        return $this->promotions_and_updates;
     }
 }
