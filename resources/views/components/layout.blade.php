@@ -49,7 +49,7 @@
                     <div x-show="open" class="absolute mt-2 bg-white border rounded shadow-md">
                         @auth
                             <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                            <a href="{{ route('settings.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                             <hr class="my-2 border-t">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

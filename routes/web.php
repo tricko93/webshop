@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,4 +97,23 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/profile/update', [ProfileController::class, 'update'])
         ->name('profile.update');
+
+    // Settings Page
+    Route::get('/settings', [SettingsController::class, 'showSettings'])
+        ->name('settings.show');
+
+    // Change Password
+    Route::get('/settings/password', [SettingsController::class, 'showChangePasswordForm'])
+        ->name('password.change');
+    Route::post('/settings/password', [SettingsController::class, 'changePassword']);
+
+    // Change Email
+    Route::get('/settings/email', [SettingsController::class, 'showChangeEmailForm'])
+        ->name('email.change');
+    Route::post('/settings/email', [SettingsController::class, 'changeEmail']);
+
+    // Delete Account
+    Route::get('/settings/delete', [SettingsController::class, 'showDeleteAccountForm'])
+        ->name('account.delete');
+    Route::delete('/settings/delete', [SettingsController::class, 'deleteAccount']);
 });
