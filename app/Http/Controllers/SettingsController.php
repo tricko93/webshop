@@ -32,6 +32,11 @@ class SettingsController extends Controller
         return view('settings.delete-account');
     }
 
+    public function showProfilePictureForm()
+    {
+        return view('settings.update-picture');
+    }
+
     public function changePassword(Request $request)
     {
         $request->validate([
@@ -114,5 +119,39 @@ class SettingsController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Settings updated successfully.');
+    }
+
+    /**
+     * Update the user's profile picture.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateProfilePicture(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'profile_picture_url' => 'nullable|string',
+            'profile_picture_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+        ]);
+
+        // Retrieve the authenticated user
+        $user = Auth::user();
+
+        // Check if a profile picture URL is provided
+        if ($request->filled('profile_picture_url')) {
+            // Update profile picture URL
+            $user->update(['profile_picture_url' => $request->input('profile_picture_url')]);
+        }
+        // Check if a profile picture file is uploaded
+        elseif ($request->hasFile('profile_picture_file')) {
+            // Upload and update profile picture file
+            $file = $request->file('profile_picture_file');
+            $path = $file->store('profile_pictures', 'public');
+            $user->update(['profile_picture_url' => asset('storage/' . $path)]);
+        }
+
+        // Redirect back to the profile form with a success message
+        return redirect()->route('settings.show')->with('success', 'Profile picture updated successfully!');
     }
 }

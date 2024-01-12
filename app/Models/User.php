@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email_verified_at',
         'order_confirmation',
         'promotions_and_updates',
+        'profile_picture_url',
     ];
 
     /**

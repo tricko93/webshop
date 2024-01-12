@@ -95,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'showProfile'])
     	->name('profile.show');
 
+    // Profile Update
     Route::post('/profile/update', [ProfileController::class, 'update'])
         ->name('profile.update');
 
@@ -120,4 +121,10 @@ Route::middleware(['auth'])->group(function () {
     // Update Settings
     Route::post('/settings/update', [SettingsController::class, 'updateSettings'])
         ->name('settings.update');
+
+    // Update Profile Picture
+    Route::get('/settings/picture', [SettingsController::class, 'showProfilePictureForm'])
+        ->name('settings.picture');
+    Route::post('/settings/update/profile-picture', [SettingsController::class, 'updateProfilePicture'])
+        ->name('settings.updateProfilePicture');
 });

@@ -6,7 +6,7 @@
             <!-- Profile Picture -->
             <div class="flex items-center mt-4">
                 <img src="{{ auth()->user()->profile_picture_url }}" alt="Profile Picture" class="rounded-full h-16 w-16">
-                <button class="ml-2 text-blue-500">Change Profile Picture</button>
+                <a href="{{ route('settings.picture') }}" class="ml-2 text-blue-500">Change Profile Picture</a>
             </div>
 
             <!-- User Details -->
