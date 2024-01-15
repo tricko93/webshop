@@ -80,8 +80,15 @@ Route::get('/', fn() => view('products.index'))->name('home');
 Route::resource('products', ProductController::class)
 	->only(['index', 'show']);
 
-Route::resource('cart', CartController::class)
-    ->only(['create', 'store']);
+// Route::resource('cart', CartController::class)
+    // ->only(['create', 'store']);
+
+Route::get('/cart', [CartController::class, 'index'])
+    ->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'addToCart'])
+    ->name('cart.addToCart');
+Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])
+    ->name('cart.removeFromCart');
 
 /*
 |--------------------------------------------------------------------------

@@ -15,11 +15,15 @@
 	                    <p class="text-gray-600">{{ $product->description }}</p>
 	                    <p class="text-indigo-600 font-bold">${{ $product->price }}</p>
 	                    <a href="{{ route('products.show', $product) }}" class="text-indigo-600 hover:underline">Quick Show</a>
-	                    {{-- Add more product details as needed --}}
-	                    <form action="{{ route('cart.store', $product) }}" method="POST">
-	                        @csrf
-	                        <x-button>Add to Cart</x-button>
-	                    </form>
+	                     <form action="{{ route('cart.addToCart') }}" method="POST">
+		                    @csrf
+		                    <input type="hidden" name="product_id" value="{{ $product->id }}" />
+		                    <input type="hidden" name="product_name" value="{{ $product->name }}" />
+		                    <input type="hidden" name="price" value="{{ $product->price }}" />
+		                    <input type="hidden" name="quantity" value="1" min="1" />
+
+		                    <x-button type="submit">Add to Cart</x-button>
+		                </form>
 	                </div>
 	            @endforeach
 	        @else
