@@ -14,7 +14,7 @@
                 @forelse($cartItems as $productId => $item)
                     <li>
                         {{ $item['product_name'] }} - ${{ $item['price'] }} (Quantity: {{ $item['quantity'] }})
-                        <form action="{{ route('cart.removeFromCart', $item['product_name']) }}" method="POST" class="inline">
+                        <form action="{{ route('cart.removeFromCart', $item['product_id']) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline">Remove</button>
