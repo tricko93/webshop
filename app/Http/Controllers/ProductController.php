@@ -14,8 +14,19 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $category = $request->input('category_id');
 
-        $products = Product::where('name', 'like', '%' . $search . '%')->paginate(15);
+        $products = Product::query();
+
+        if (!empty($category)) {
+            $products->where('category_id', $category);
+        }
+
+        if (!empty($search)) {
+            $products = $products->where('name', 'like', '%' . $search . '%');
+        }
+
+        $products = $products->paginate(15);
 
         return view('products.index', compact('products'));
     }

@@ -28,7 +28,7 @@
                 <ul class="flex space-x-2">
                     @foreach($categories as $category)
                         <li>
-                            <a href="#">{{ $category->name }}</a>
+                            <a href="{{ route('products.index', ['category_id' => $category->id])}}">{{ $category->name }}</a>
                         </li>
                     @endforeach
                 </ul>
