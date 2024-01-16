@@ -19,7 +19,9 @@
 
         <div class="flex-grow items-center px-8 mt-7">
             <!-- Search input goes here -->
-            <x-search-box />
+            <form method="GET" action="{{ route('products.index') }}"> 
+                <x-search-box />
+            </form>
 
             <!-- Display categories -->
             @if(isset($categories))
