@@ -30,5 +30,10 @@
 	        	<div>No products available at the moment.</div>
             @endif
         </div>
+		@if (isset($products))
+		    <div style="display: flex; justify-content: center;">
+		        {{ $products->links('numbers-pagination') }}
+		    </div>
+		@endif
     </x-card>
 </x-layout>
